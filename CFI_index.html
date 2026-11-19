@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C.F.I. — Community Forged Innovation</title>
+<meta name="description" content="End-to-end innovation management for EU-funded projects. We help consortia maximise the impact of their research — from proposal to market.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --accent: #2563EB;
+  --accent-alt: #3B82F6;
+  --accent-dark: #1D4ED8;
+  --accent-glow: rgba(37, 99, 235, 0.15);
+  --navy: #0C2D48;
+  --navy-dark: #091E32;
+  --bg: #EBF4FA;
+  --bg2: #E1EEF7;
+  --bg3: #D6E8F4;
+  --bg-card: rgba(255, 255, 255, 0.65);
+  --bg-card-solid: #FFFFFF;
+  --border: rgba(12, 45, 72, 0.08);
+  --border-hover: rgba(37, 99, 235, 0.35);
+  --text: #0C2D48;
+  --text2: #3D6380;
+  --text3: #7A9BB5;
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --max-w: 1200px;
+  --transition: cubic-bezier(.16,1,.3,1);
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font); color: var(--text2); background: var(--bg); -webkit-font-smoothing: antialiased; line-height: 1.6; }
+
+/* ── FADE ANIMATION ── */
+.fade-up {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.7s var(--transition), transform 0.7s var(--transition);
+}
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  transition: all 0.5s var(--transition);
+}
+nav.scrolled {
+  background: rgba(235, 244, 250, 0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 4px 30px rgba(12, 45, 72, 0.06);
+}
+.nav-inner {
+  max-width: var(--max-w); margin: 0 auto; padding: 0 2rem;
+  display: flex; align-items: center; justify-content: space-between; height: 72px;
+}
+.nav-links { display: flex; align-items: center; gap: 2rem; }
+.nav-links button {
+  background: none; border: none; color: var(--text2); font-family: var(--font);
+  font-size: 0.9rem; font-weight: 500; cursor: pointer;
+  transition: color 0.3s var(--transition); padding: 0; position: relative;
+}
+.nav-links button::after {
+  content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 2px;
+  background: var(--accent); border-radius: 2px;
+  transform: scaleX(0); transition: transform 0.35s var(--transition);
+}
+.nav-links button:hover { color: var(--text); }
+.nav-links button:hover::after { transform: scaleX(1); }
+.nav-cta {
+  background: linear-gradient(135deg, var(--accent), var(--accent-alt)) !important;
+  color: #fff !important; font-weight: 700 !important;
+  padding: 0.5rem 1.25rem !important; border-radius: 10px !important;
+  transition: all 0.35s var(--transition) !important;
+  box-shadow: 0 2px 12px rgba(37,99,235,0.2) !important;
+}
+.nav-cta::after { display: none !important; }
+.nav-cta:hover { box-shadow: 0 4px 24px rgba(37,99,235,0.35) !important; transform: translateY(-2px) !important; }
+.mobile-btn { display: none; background: none; border: none; color: var(--text); cursor: pointer; padding: 4px; }
+
+/* ── LOGO ── */
+.logo { display: flex; align-items: center; gap: 12px; cursor: pointer; text-decoration: none; }
+.logo-mark-wrap { position: relative; width: 40px; height: 40px; }
+.logo-glow { position: absolute; inset: -4px; border-radius: 14px; background: linear-gradient(135deg, rgba(37,99,235,0.25), rgba(59,130,246,0.15)); filter: blur(8px); opacity: 0.7; }
+.logo-mark {
+  position: relative; width: 40px; height: 40px; border-radius: 12px;
+  background: linear-gradient(135deg, #2563EB 0%, #3B82F6 50%, #1D4ED8 100%);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 20px rgba(37,99,235,0.3), inset 0 1px 0 rgba(255,255,255,0.25);
+  overflow: hidden;
+}
+.logo-shine { position: absolute; top: 0; left: 0; right: 0; height: 50%; background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, transparent 100%); border-radius: 12px 12px 0 0; }
+.logo-inner-border { position: absolute; inset: 1.5px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.15); }
+.logo-dot { position: absolute; top: -2px; right: -2px; width: 8px; height: 8px; border-radius: 50%; background: #2563EB; border: 2px solid #EBF4FA; box-shadow: 0 0 6px rgba(37,99,235,0.5); }
+.logo-dot.light { border-color: #0C2D48; }
+.logo-text { line-height: 1.15; }
+.logo-text-top { font-size: 16px; font-weight: 800; color: var(--navy); letter-spacing: -0.03em; }
+.logo-text-bottom { display: flex; align-items: center; gap: 6px; }
+.logo-text-accent { font-size: 16px; font-weight: 800; color: #2563EB; letter-spacing: -0.03em; }
+.logo-text-ike { font-size: 9px; font-weight: 700; color: rgba(12,45,72,0.35); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
+.logo.light .logo-text-top { color: #fff; }
+.logo.light .logo-text-ike { color: rgba(255,255,255,0.4); }
+.logo.light .logo-dot { border-color: #0C2D48; }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh; display: flex; align-items: center;
+  position: relative; overflow: hidden;
+  background: linear-gradient(170deg, #D6E8F4 0%, var(--bg) 40%, #E8F0E8 100%);
+}
+.hero-orb1 {
+  position: absolute; width: 500px; height: 500px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(37,99,235,0.1) 0%, transparent 70%);
+  top: -80px; right: -120px; pointer-events: none; animation: float 8s ease-in-out infinite;
+}
+.hero-orb2 {
+  position: absolute; width: 350px; height: 350px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(37,99,235,0.06) 0%, transparent 70%);
+  bottom: -60px; left: -80px; pointer-events: none; animation: float 10s ease-in-out infinite reverse;
+}
+.hero-dots {
+  position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(12,45,72,0.06) 1px, transparent 1px);
+  background-size: 28px 28px; pointer-events: none;
+}
+@keyframes float { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-20px) scale(1.03)} }
+.hero-inner {
+  max-width: var(--max-w); margin: 0 auto; padding: 8rem 2rem 4rem;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+  position: relative; z-index: 1; width: 100%;
+}
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(37,99,235,0.12); color: var(--accent-dark);
+  padding: 0.3rem 0.85rem; border-radius: 9999px;
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; margin-bottom: 1.5rem;
+  border: 1px solid rgba(37,99,235,0.2);
+}
+.hero-tag-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.hero h1 {
+  font-size: clamp(2.5rem, 4.5vw, 3.75rem); font-weight: 900;
+  color: var(--navy); line-height: 1.08; letter-spacing: -0.04em; margin-bottom: 1.5rem;
+}
+.hero h1 .accent {
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hero-desc { font-size: 1.1rem; color: var(--text2); line-height: 1.7; margin-bottom: 2rem; max-width: 460px; }
+.hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-alt));
+  color: #fff; font-weight: 700; padding: 0.8rem 2rem; border-radius: 10px;
+  border: none; cursor: pointer; font-family: var(--font); font-size: 0.95rem;
+  transition: all 0.35s var(--transition); text-decoration: none;
+  box-shadow: 0 4px 20px rgba(37,99,235,0.25);
+}
+.btn-primary:hover { box-shadow: 0 8px 32px rgba(37,99,235,0.35); transform: translateY(-2px); }
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: transparent; color: var(--navy); border: 2px solid rgba(12,45,72,0.15);
+  padding: 0.75rem 2rem; border-radius: 10px; cursor: pointer; font-family: var(--font);
+  font-size: 0.95rem; font-weight: 700; transition: all 0.35s var(--transition); text-decoration: none;
+}
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent-dark); background: rgba(37,99,235,0.04); }
+
+.hero-right-card {
+  background: var(--bg-card-solid); border: 1px solid rgba(12,45,72,0.06);
+  border-radius: 22px; padding: 2.25rem; position: relative; overflow: hidden;
+  scrollbar-width: none; -ms-overflow-style: none;
+  box-shadow: 0 8px 32px rgba(12,45,72,0.06); transition: all 0.4s var(--transition);
+}
+.hero-right-card::-webkit-scrollbar { display: none; }
+.hero-right-card:hover { box-shadow: 0 16px 48px rgba(12,45,72,0.08); }
+.hero-right-tag { font-size: 0.78rem; font-weight: 600; color: var(--text3); margin-bottom: 1rem; letter-spacing: 0.02em; }
+.hero-right-title { font-size: 1.35rem; font-weight: 800; color: var(--navy); margin-bottom: 0.6rem; letter-spacing: -0.02em; }
+.hero-right-desc { font-size: 0.9rem; color: var(--text2); line-height: 1.65; margin-bottom: 1.25rem; }
+.hero-right-services { display: flex; flex-direction: column; }
+.hero-right-svc {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.7rem 0; border-bottom: 1px solid rgba(12,45,72,0.06);
+  font-size: 0.88rem; font-weight: 600; color: var(--navy); cursor: pointer;
+  transition: all 0.3s var(--transition); text-decoration: none;
+}
+.hero-right-svc:first-child { border-top: 1px solid rgba(12,45,72,0.06); }
+.hero-right-svc:hover { color: var(--accent-dark); padding-left: 6px; }
+
+/* ── SECTIONS ── */
+section { padding: 6rem 2rem; }
+.wrap { max-width: var(--max-w); margin: 0 auto; }
+.section-header { text-align: center; margin-bottom: 4rem; }
+.section-tag {
+  display: inline-block; background: rgba(37,99,235,0.1); color: var(--accent-dark);
+  padding: 0.3rem 0.85rem; border-radius: 9999px; font-size: 0.78rem; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 1rem;
+  border: 1px solid rgba(37,99,235,0.15);
+}
+.section-title {
+  font-size: clamp(1.8rem, 3.2vw, 2.5rem); font-weight: 800;
+  color: var(--navy); line-height: 1.15; letter-spacing: -0.03em; margin-bottom: 0.75rem;
+}
+.section-desc { font-size: 1rem; color: var(--text2); max-width: 540px; margin: 0 auto; line-height: 1.7; }
+
+/* ── SERVICES ── */
+.svc-section { background: var(--bg2); }
+.svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; align-items: stretch; }
+.svc-card {
+  background: var(--bg-card-solid); border: 1px solid rgba(12,45,72,0.06);
+  border-radius: 18px; padding: 2rem; position: relative; overflow: hidden;
+  transition: all 0.4s var(--transition); cursor: default;
+  box-shadow: 0 2px 12px rgba(12,45,72,0.03);
+  display: flex; flex-direction: column; height: 100%;
+}
+.svc-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-alt));
+  transform: scaleX(0); transform-origin: left; transition: transform 0.5s var(--transition);
+}
+.svc-card:hover {
+  border-color: var(--border-hover); transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(37,99,235,0.08), 0 4px 16px rgba(12,45,72,0.04);
+}
+.svc-card:hover::before { transform: scaleX(1); }
+.svc-icon { margin-bottom: 1.25rem; transition: transform 0.4s var(--transition); }
+.svc-card:hover .svc-icon { transform: scale(1.1); }
+.svc-card h3 { font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.3rem; line-height: 1.3; }
+.svc-card .svc-tag-line { font-size: 0.82rem; color: var(--accent-dark); font-weight: 600; margin-bottom: 0.75rem; }
+.svc-card p { font-size: 0.88rem; color: var(--text2); line-height: 1.65; margin-bottom: 0.75rem; flex: 1; }
+.svc-items { display: flex; flex-direction: column; gap: 0.4rem; animation: fadeIn 0.35s var(--transition); }
+@keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+.svc-items li { list-style: none; font-size: 0.82rem; color: var(--text3); padding-left: 1rem; position: relative; line-height: 1.5; }
+.svc-items li::before { content: ''; position: absolute; left: 0; top: 0.45rem; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); opacity: 0.7; }
+.svc-toggle {
+  display: flex; align-items: center; gap: 6px; font-size: 0.82rem; font-weight: 700;
+  color: var(--accent-dark); cursor: pointer; background: none; border: none;
+  font-family: var(--font); padding: 0; margin-top: auto; padding-top: 0.75rem; transition: all 0.3s var(--transition);
+}
+.svc-toggle:hover { color: var(--accent); gap: 10px; }
+.svc-toggle .arrow { transition: transform 0.3s var(--transition); display: inline-flex; }
+.svc-toggle.open .arrow { transform: rotate(90deg); }
+
+/* ── TABS ── */
+.tabs-section { background: var(--bg); }
+.tabs-bar { display: flex; gap: 0; border-bottom: 2px solid rgba(12,45,72,0.06); margin-bottom: 2.5rem; overflow-x: auto; }
+.tab-btn {
+  flex: 1; padding: 1rem 0.75rem; background: none; border: none;
+  font-family: var(--font); font-size: 0.9rem; font-weight: 600;
+  color: var(--text3); cursor: pointer; transition: all 0.35s var(--transition);
+  position: relative; white-space: nowrap;
+}
+.tab-btn.active { color: var(--accent-dark); }
+.tab-btn::after {
+  content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-alt)); border-radius: 3px;
+  transform: scaleX(0); transition: transform 0.4s var(--transition);
+}
+.tab-btn.active::after { transform: scaleX(1); }
+.tab-btn:hover { color: var(--navy); }
+.tab-content { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+.tab-desc { font-size: 1.05rem; color: var(--text2); line-height: 1.75; margin-bottom: 1.5rem; }
+.tab-svc-list { display: flex; flex-direction: column; }
+.tab-svc-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.9rem 0; border-bottom: 1px solid var(--border);
+  font-size: 0.95rem; font-weight: 600; color: var(--navy);
+  cursor: pointer; transition: all 0.3s var(--transition); text-decoration: none;
+}
+.tab-svc-item:first-child { border-top: 1px solid var(--border); }
+.tab-svc-item:hover { color: var(--accent-dark); padding-left: 8px; }
+.tab-cta {
+  background: var(--bg-card-solid); border: 1px solid rgba(12,45,72,0.06);
+  border-radius: 18px; padding: 2rem; transition: all 0.4s var(--transition);
+  box-shadow: 0 2px 12px rgba(12,45,72,0.03);
+}
+.tab-cta:hover { border-color: var(--border-hover); box-shadow: 0 12px 40px rgba(37,99,235,0.08); }
+.tab-cta h4 { font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
+.tab-cta p { font-size: 0.88rem; color: var(--text3); margin-bottom: 1rem; line-height: 1.6; }
+
+/* ── AREAS ── */
+.areas-section { background: var(--bg2); }
+.areas-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; align-items: stretch; }
+.area-card {
+  background: var(--bg-card-solid); border: 1px solid rgba(12,45,72,0.06);
+  border-radius: 14px; padding: 1.5rem; text-align: center;
+  transition: all 0.4s var(--transition); cursor: pointer;
+  box-shadow: 0 2px 10px rgba(12,45,72,0.03);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;
+}
+.area-card:hover { border-color: var(--border-hover); transform: translateY(-4px); box-shadow: 0 12px 36px rgba(37,99,235,0.08); }
+.area-icon { color: var(--accent); margin-bottom: 0.75rem; display: flex; justify-content: center; transition: transform 0.4s var(--transition); }
+.area-card:hover .area-icon { transform: scale(1.15) rotate(-5deg); }
+.area-name { font-size: 0.88rem; font-weight: 600; color: var(--navy); }
+
+/* ── PROCESS ── */
+.process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; position: relative; align-items: stretch; }
+.process-grid::before {
+  content: ''; position: absolute; top: 40px; left: 12%; right: 12%; height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(37,99,235,0.2), rgba(37,99,235,0.3), rgba(37,99,235,0.2), transparent);
+}
+.process-step { text-align: center; position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; height: 100%; }
+.process-icon {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: var(--bg-card-solid); border: 2px solid rgba(37,99,235,0.25);
+  display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;
+  transition: all 0.4s var(--transition); box-shadow: 0 4px 16px rgba(37,99,235,0.06);
+}
+.process-step:hover .process-icon { border-color: var(--accent); transform: scale(1.08); box-shadow: 0 8px 30px rgba(37,99,235,0.15); }
+.process-num { font-size: 0.7rem; font-weight: 800; color: var(--accent-dark); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.5rem; }
+.process-step h4 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
+.process-step p { font-size: 0.84rem; color: var(--text3); line-height: 1.6; }
+
+/* ── TEAM ── */
+.team-section { background: var(--bg2); }
+.team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: center; }
+.team-visual {
+  background: var(--bg-card-solid); border: 1px solid rgba(12,45,72,0.06);
+  border-radius: 24px; padding: 2.5rem; transition: all 0.4s var(--transition);
+  box-shadow: 0 4px 20px rgba(12,45,72,0.04);
+  display: flex; align-items: center; justify-content: center; min-height: 280px;
+}
+.team-visual:hover { box-shadow: 0 16px 48px rgba(37,99,235,0.06); }
+.team-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; }
+.team-tag {
+  font-size: 0.75rem; font-weight: 600; padding: 0.3rem 0.75rem; border-radius: 9999px;
+  background: rgba(37,99,235,0.08); color: var(--accent-dark);
+  border: 1px solid rgba(37,99,235,0.15); transition: all 0.3s var(--transition);
+}
+.team-tag:hover { background: rgba(37,99,235,0.15); transform: translateY(-2px); }
+.team-text h2 { font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 800; color: var(--navy); margin-bottom: 1rem; line-height: 1.15; letter-spacing: -0.02em; }
+.team-text p { font-size: 0.95rem; color: var(--text2); line-height: 1.7; margin-bottom: 0.75rem; }
+.team-link { display: inline-flex; align-items: center; gap: 8px; color: var(--accent-dark); font-weight: 700; font-size: 0.9rem; text-decoration: none; margin-top: 0.75rem; transition: all 0.3s var(--transition); }
+.team-link:hover { gap: 14px; color: var(--accent); }
+
+/* ── CONTACT ── */
+.contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+.contact-headline { font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 800; color: var(--navy); line-height: 1.12; letter-spacing: -0.03em; margin-bottom: 1rem; }
+.contact-headline .accent { background: linear-gradient(135deg, var(--accent), var(--accent-dark)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.contact-intro { font-size: 1rem; color: var(--text2); line-height: 1.7; margin-bottom: 1.5rem; max-width: 400px; }
+.contact-note { font-size: 0.8rem; color: var(--text3); margin-top: 1rem; font-weight: 500; }
+.contact-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.contact-card {
+  background: var(--bg-card-solid); border: 1px solid rgba(12,45,72,0.06);
+  border-radius: 16px; padding: 1.5rem; text-decoration: none; color: inherit;
+  transition: all 0.4s var(--transition); display: flex; flex-direction: column;
+  box-shadow: 0 2px 12px rgba(12,45,72,0.03); cursor: default;
+}
+a.contact-card { cursor: pointer; }
+.contact-card:hover { border-color: var(--border-hover); transform: translateY(-4px); box-shadow: 0 12px 36px rgba(37,99,235,0.08); }
+.contact-card-accent { background: linear-gradient(135deg, rgba(37,99,235,0.04), rgba(37,99,235,0.08)); border-color: rgba(37,99,235,0.12); }
+.contact-card-icon {
+  width: 42px; height: 42px; border-radius: 10px;
+  background: rgba(37,99,235,0.08); border: 1px solid rgba(37,99,235,0.12);
+  color: var(--accent); display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1rem; transition: all 0.35s var(--transition);
+}
+.contact-card:hover .contact-card-icon { background: rgba(37,99,235,0.12); transform: scale(1.06); }
+.contact-card-label { font-size: 0.7rem; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.3rem; }
+.contact-card-val { font-size: 0.95rem; font-weight: 600; color: var(--navy); line-height: 1.35; margin-bottom: 0.25rem; word-break: break-word; }
+.contact-card-sub { font-size: 0.78rem; color: var(--text3); font-weight: 500; }
+.contact-card-action { font-size: 0.78rem; font-weight: 700; color: var(--accent); display: flex; align-items: center; gap: 5px; margin-top: auto; padding-top: 0.75rem; transition: gap 0.3s var(--transition); }
+.contact-card:hover .contact-card-action { gap: 9px; }
+
+/* ── FOOTER ── */
+footer { background: var(--navy-dark); padding: 3.5rem 2rem 1.5rem; position: relative; overflow: hidden; }
+footer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--accent-alt), var(--accent)); }
+.footer-inner { max-width: var(--max-w); margin: 0 auto; position: relative; z-index: 1; }
+.footer-grid { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 3rem; margin-bottom: 3rem; }
+.footer-brand p { font-size: 0.85rem; color: rgba(255,255,255,0.35); line-height: 1.65; margin-top: 1.25rem; max-width: 260px; }
+footer h5 { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(255,255,255,0.25); margin-bottom: 1rem; }
+footer a { display: block; font-size: 0.85rem; color: rgba(255,255,255,0.45); text-decoration: none; margin-bottom: 0.65rem; transition: all 0.3s var(--transition); }
+footer a:hover { color: var(--accent); transform: translateX(4px); }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+.footer-bottom p { font-size: 0.8rem; color: rgba(255,255,255,0.2); }
+.footer-legal { display: flex; gap: 1.5rem; }
+.footer-legal a { font-size: 0.8rem; color: rgba(255,255,255,0.25); margin: 0; }
+.footer-legal a:hover { transform: none; }
+.footer-social {
+  width: 34px; height: 34px; border-radius: 8px; background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,0.35); cursor: pointer; transition: all 0.35s var(--transition); text-decoration: none;
+}
+.footer-social:hover { border-color: var(--accent); color: var(--accent); background: rgba(37,99,235,0.1); }
+
+/* MOBILE NAV */
+.mobile-nav {
+  position: fixed; inset: 0; z-index: 200; background: var(--bg);
+  display: none; flex-direction: column; padding: 5rem 2rem 2rem;
+  animation: slideIn 0.3s var(--transition);
+}
+.mobile-nav.open { display: flex; }
+@keyframes slideIn { from{opacity:0;transform:translateX(100%)} to{opacity:1;transform:translateX(0)} }
+.mobile-close { position: absolute; top: 1.25rem; right: 1.5rem; background: none; border: none; cursor: pointer; color: var(--navy); padding: 4px; }
+.mobile-nav a {
+  font-size: 1.4rem; font-weight: 700; color: var(--navy); text-decoration: none;
+  padding: 1rem 0; border-bottom: 1px solid var(--border); display: block;
+  transition: all 0.3s var(--transition);
+}
+.mobile-nav a:hover { color: var(--accent-dark); padding-left: 8px; }
+
+/* ── SVG ICONS INLINE ── */
+.icon-arrow { display: inline-flex; vertical-align: middle; }
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .svc-grid { grid-template-columns: repeat(2, 1fr); }
+  .areas-grid { grid-template-columns: repeat(3, 1fr); }
+  .process-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+  .process-grid::before { display: none; }
+  .team-grid, .contact-layout { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  section { padding: 4rem 1.25rem; }
+  .nav-links { display: none; }
+  .mobile-btn { display: block; }
+  .hero-inner { padding: 7rem 1.25rem 3rem; }
+  .svc-grid { grid-template-columns: 1fr; }
+  .areas-grid { grid-template-columns: 1fr 1fr; }
+  .tab-content { grid-template-columns: 1fr; }
+  .process-grid { grid-template-columns: 1fr 1fr; }
+  .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .contact-cards { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#home" class="logo" onclick="go('home')">
+      <div class="logo-mark-wrap">
+        <div class="logo-glow"></div>
+        <div class="logo-mark">
+          <div class="logo-shine"></div>
+          <div class="logo-inner-border"></div>
+          <svg width="24" height="22" viewBox="0 0 36 28" style="position:relative;z-index:1"><text x="0" y="21" fill="white" font-family="Inter, sans-serif" font-weight="800" font-size="14.5" letter-spacing="0.5">C.F.I.</text></svg>
+        </div>
+        <div class="logo-dot"></div>
+      </div>
+      <div class="logo-text">
+        <div class="logo-text-top">Community Forged</div>
+        <div class="logo-text-bottom">
+          <span class="logo-text-accent">Innovation</span>
+          <span class="logo-text-ike">IKE</span>
+        </div>
+      </div>
+    </a>
+    <div class="nav-links">
+      <button onclick="go('services')">Services</button>
+      <button onclick="go('serve')">Who We Serve</button>
+      <button onclick="go('areas')">Areas</button>
+      <button onclick="go('process')">Approach</button>
+      <button onclick="go('contact')">Contact</button>
+      <button class="nav-cta" onclick="go('contact')">Contact Us</button>
+    </div>
+    <button class="mobile-btn" onclick="document.getElementById('mobile-nav').classList.add('open')">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="18" y2="12"/><line x1="3" y1="18" x2="14" y2="18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobile-nav">
+  <button class="mobile-close" onclick="document.getElementById('mobile-nav').classList.remove('open')">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <a href="#services" onclick="go('services')">Services</a>
+  <a href="#serve" onclick="go('serve')">Who We Serve</a>
+  <a href="#areas" onclick="go('areas')">Areas</a>
+  <a href="#process" onclick="go('process')">Approach</a>
+  <a href="#contact" onclick="go('contact')">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-dots"></div>
+  <div class="hero-orb1"></div>
+  <div class="hero-orb2"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="fade-up"><div class="hero-tag"><div class="hero-tag-dot"></div>EU Innovation Consulting</div></div>
+      <div class="fade-up" style="transition-delay:0.08s"><h1>Bridging Science<br>to <span class="accent">Market Impact</span></h1></div>
+      <div class="fade-up" style="transition-delay:0.18s"><p class="hero-desc">End-to-end innovation management for EU-funded projects. We help consortia maximise the impact of their research — from proposal to market.</p></div>
+      <div class="fade-up" style="transition-delay:0.28s">
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="go('services')">Explore Services <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+          <button class="btn-ghost" onclick="go('contact')">Get in Touch</button>
+        </div>
+      </div>
+    </div>
+    <div class="fade-up" style="transition-delay:0.15s">
+      <div class="hero-right-card">
+        <div class="hero-right-tag">🇪🇺 Horizon Europe · Horizon 2020</div>
+        <h3 class="hero-right-title">What We Deliver</h3>
+        <p class="hero-right-desc">End-to-end innovation support for EU-funded consortia — from IP management and exploitation strategy to business planning and market entry.</p>
+        <div class="hero-right-services" id="hero-services"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="svc-section" id="services">
+  <div class="wrap">
+    <div class="section-header">
+      <div class="fade-up"><div class="section-tag">Services</div></div>
+      <div class="fade-up" style="transition-delay:0.06s"><h2 class="section-title">End-to-End Innovation Support</h2></div>
+      <div class="fade-up" style="transition-delay:0.12s"><p class="section-desc">From the first grant application to market launch — strategic expertise that transforms EU-funded research into impact.</p></div>
+    </div>
+    <div class="svc-grid" id="svc-grid"></div>
+  </div>
+</section>
+
+<!-- WHO WE SERVE -->
+<section class="tabs-section" id="serve">
+  <div class="wrap">
+    <div class="section-header">
+      <div class="fade-up"><div class="section-tag">Who We Serve</div></div>
+      <div class="fade-up" style="transition-delay:0.06s"><h2 class="section-title">Tailored to Your Organisation</h2></div>
+      <div class="fade-up" style="transition-delay:0.12s"><p class="section-desc">Every innovation journey is different. We adapt our services to your context, sector, and growth stage.</p></div>
+    </div>
+    <div class="tabs-bar" id="tabs-bar"></div>
+    <div class="tab-content" id="tab-content"></div>
+  </div>
+</section>
+
+<!-- AREAS -->
+<section class="areas-section" id="areas">
+  <div class="wrap">
+    <div class="section-header">
+      <div class="fade-up"><div class="section-tag">Expertise</div></div>
+      <div class="fade-up" style="transition-delay:0.06s"><h2 class="section-title">Areas of Expertise</h2></div>
+      <div class="fade-up" style="transition-delay:0.12s"><p class="section-desc">Deep domain knowledge across the breadth of EU research and innovation.</p></div>
+    </div>
+    <div class="areas-grid" id="areas-grid"></div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="wrap">
+    <div class="section-header">
+      <div class="fade-up"><div class="section-tag">Approach</div></div>
+      <div class="fade-up" style="transition-delay:0.06s"><h2 class="section-title">How We Work</h2></div>
+      <div class="fade-up" style="transition-delay:0.12s"><p class="section-desc">A proven methodology that delivers measurable outcomes at every stage.</p></div>
+    </div>
+    <div class="process-grid" id="process-grid"></div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team-section" id="team">
+  <div class="wrap">
+    <div class="team-grid">
+      <div class="fade-up">
+        <div class="team-text">
+          <div class="section-tag">Our Team</div>
+          <h2>Experienced Professionals, Dedicated to Your Success</h2>
+          <p>Our team brings together expertise in EU policy, innovation management, intellectual property, business development, and digital strategy.</p>
+          <p>We work with specialised profiles who understand the EU R&I ecosystem inside out — and who speak your language, whatever your sector.</p>
+          <a href="#contact" class="team-link" onclick="event.preventDefault();go('contact')">Work with us <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+      </div>
+      <div class="fade-up" style="transition-delay:0.12s">
+        <div class="team-visual">
+          <div class="team-tags" id="team-tags"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-layout">
+      <div class="fade-up">
+        <div class="contact-left">
+          <div class="section-tag">Get in Touch</div>
+          <h2 class="contact-headline">Let's Build Something<br><span class="accent">Together</span></h2>
+          <p class="contact-intro">Whether you're preparing a Horizon Europe proposal or looking to maximise the impact of an ongoing project, we'd love to hear from you.</p>
+          <a href="mailto:info@communityforgedinnovation.com" class="btn-primary" style="margin-top:0.5rem">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <span>Send Us an Email</span>
+          </a>
+          <p class="contact-note">We typically respond within 24 hours.</p>
+        </div>
+      </div>
+      <div class="contact-cards">
+        <div class="fade-up" style="transition-delay:0.08s;height:100%">
+          <a href="mailto:info@communityforgedinnovation.com" class="contact-card">
+            <div class="contact-card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div>
+            <div class="contact-card-label">Email</div>
+            <div class="contact-card-val">info@communityforgedinnovation.com</div>
+            <div class="contact-card-action">Write to us <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+          </a>
+        </div>
+        <div class="fade-up" style="transition-delay:0.14s;height:100%">
+          <div class="contact-card">
+            <div class="contact-card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            <div class="contact-card-label">Location</div>
+            <div class="contact-card-val">Athens, Greece</div>
+            <div class="contact-card-sub">Operating across the European Union</div>
+          </div>
+        </div>
+        <div class="fade-up" style="transition-delay:0.2s;height:100%">
+          <a href="tel:+30210XXXXXXX" class="contact-card">
+            <div class="contact-card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+            <div class="contact-card-label">Phone</div>
+            <div class="contact-card-val">+30 210 XXX XXXX</div>
+            <div class="contact-card-action">Call us <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+          </a>
+        </div>
+        <div class="fade-up" style="transition-delay:0.26s;height:100%">
+          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="contact-card contact-card-accent">
+            <div class="contact-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
+            <div class="contact-card-label">LinkedIn</div>
+            <div class="contact-card-val">Community Forged Innovation</div>
+            <div class="contact-card-action">Connect with us <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#home" class="logo light" onclick="go('home')">
+          <div class="logo-mark-wrap">
+            <div class="logo-glow"></div>
+            <div class="logo-mark">
+              <div class="logo-shine"></div>
+              <div class="logo-inner-border"></div>
+              <svg width="24" height="22" viewBox="0 0 36 28" style="position:relative;z-index:1"><text x="0" y="21" fill="white" font-family="Inter, sans-serif" font-weight="800" font-size="14.5" letter-spacing="0.5">C.F.I.</text></svg>
+            </div>
+            <div class="logo-dot light"></div>
+          </div>
+          <div class="logo-text">
+            <div class="logo-text-top">Community Forged</div>
+            <div class="logo-text-bottom">
+              <span class="logo-text-accent">Innovation</span>
+              <span class="logo-text-ike">IKE</span>
+            </div>
+          </div>
+        </a>
+        <p>Bridging EU-funded research and real-world impact through strategic innovation management.</p>
+      </div>
+      <div>
+        <h5>Services</h5>
+        <a href="#services" onclick="event.preventDefault();go('services')">Innovation & IPR Management</a>
+        <a href="#services" onclick="event.preventDefault();go('services')">Business Planning & Market Strategy</a>
+        <a href="#services" onclick="event.preventDefault();go('services')">EU Proposal Support</a>
+        <a href="#services" onclick="event.preventDefault();go('services')">Positioning & Networking</a>
+        <a href="#services" onclick="event.preventDefault();go('services')">Innovation Strategy</a>
+      </div>
+      <div>
+        <h5>Areas</h5>
+        <a href="#areas" onclick="event.preventDefault();go('areas')">Healthcare</a>
+        <a href="#areas" onclick="event.preventDefault();go('areas')">Industry</a>
+        <a href="#areas" onclick="event.preventDefault();go('areas')">Climate & Environment</a>
+        <a href="#areas" onclick="event.preventDefault();go('areas')">Energy</a>
+        <a href="#areas" onclick="event.preventDefault();go('areas')">Digital & AI</a>
+        <a href="#areas" onclick="event.preventDefault();go('areas')">Social Innovation</a>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <a href="#serve" onclick="event.preventDefault();go('serve')">Who We Serve</a>
+        <a href="#process" onclick="event.preventDefault();go('process')">Our Approach</a>
+        <a href="#team" onclick="event.preventDefault();go('team')">Our Team</a>
+        <a href="#contact" onclick="event.preventDefault();go('contact')">Contact</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Legal Notice</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Community Forged Innovation IKE. All rights reserved.</p>
+      <div class="footer-legal"><a href="#">Privacy</a><a href="#">Cookies</a><a href="#">Legal</a></div>
+      <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="footer-social" title="LinkedIn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ─── DATA ───────────────────────────────────────────────────────────
+const SERVICES = [
+  { icon: "lightbulb", title: "Innovation & IPR Management", tag: "Protect and maximise your innovations", desc: "We identify, protect, and commercialise the intellectual property from your EU-funded project. From KERs to technology transfer.", items: ["Key Exploitable Results (KER) identification","IPR ownership frameworks","Technology Readiness Level assessment","Exploitation strategy & roadmaps","Technology transfer planning","Licensing & commercialisation","Freedom-to-operate coordination","Innovation portfolio management"] },
+  { icon: "trending", title: "Business Planning & Market Strategy", tag: "From lab to market", desc: "We bridge research and the market — developing business plans, market analyses, and go-to-market strategies for commercial success.", items: ["Market sizing & competitive analysis","Business model canvas development","Financial projections & revenue modelling","Go-to-market strategy","Investment readiness & pitch prep","Customer discovery & validation","Value proposition design","Scalability planning"] },
+  { icon: "proposal", title: "EU Proposal Support", tag: "Strengthen your consortium proposals", desc: "We strengthen the communication, dissemination, exploitation, and impact sections of Horizon Europe proposals. We know what evaluators look for.", items: ["Impact section writing & review","D&E plan drafting","KPI frameworks & expected outcomes","Consortium communication strategy","Partner coordination","Budget justification for WP activities","Reviewer feedback integration","Resubmission strategy"] },
+  { icon: "positioning", title: "Positioning & Networking", tag: "Connect with the right partners", desc: "We help organisations position themselves within the EU R&I ecosystem and build partnerships across Europe.", items: ["Horizon Europe call monitoring","Consortium partner matching","Strategic positioning in EU platforms","Stakeholder mapping & analysis","Brokerage event representation","European network integration","Advisory board recruitment","Programme landscape scanning"] },
+  { icon: "strategy", title: "Innovation Strategy", tag: "Embed innovation in your DNA", desc: "We guide organisations through implementing a coherent innovation strategy aligned with funding opportunities and market dynamics.", items: ["Innovation audit & maturity assessment","R&I funding roadmap","Innovation culture & processes","Open innovation frameworks","Technology scouting & foresight","EU programme navigation","Strategic partnership development","Impact measurement frameworks"] },
+];
+
+const CLIENT_INFO = {
+  "Start-ups": { desc: "We help you structure your value proposition, identify EU funding suited to your growth stage, and connect with strategic consortium partners.", services: ["EU Proposal Support","Business Planning & Market Strategy","Positioning & Networking","Innovation Strategy"] },
+  "SMEs": { desc: "We guide you through the EU funding landscape — from identifying calls and building consortium relationships to maximising commercial impact.", services: ["Innovation & IPR Management","Business Planning & Market Strategy","EU Proposal Support","Positioning & Networking"] },
+  "Research Centres": { desc: "We ensure your research creates lasting value — from exploitation roadmaps driving technology transfer to strategic positioning in EU networks.", services: ["Innovation & IPR Management","EU Proposal Support","Positioning & Networking","Innovation Strategy"] },
+  "Large Companies": { desc: "We provide strategic innovation management and help integrate EU-funded R&I into your broader corporate strategy for tangible competitive advantage.", services: ["Innovation & IPR Management","Business Planning & Market Strategy","Positioning & Networking","Innovation Strategy"] },
+  "Public Authorities": { desc: "We support the design of regional innovation strategies aligned with EU priorities through planning, analysis, and evaluation of R&I programmes.", services: ["Innovation Strategy","Positioning & Networking"] },
+};
+
+const AREAS = [
+  { name: "Healthcare", icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' },
+  { name: "Industry", icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="12" y1="10" x2="12" y2="14"/><line x1="10" y1="12" x2="14" y2="12"/></svg>' },
+  { name: "Climate & Environment", icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>' },
+  { name: "Energy", icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>' },
+  { name: "Digital & AI", icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>' },
+  { name: "Social Innovation", icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>' },
+  { name: "Agri-Food", icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg>' },
+  { name: "Mobility", icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="18.5" cy="18.5" r="2.5"/><circle cx="5.5" cy="18.5" r="2.5"/><path d="M15 5h4.5a2 2 0 0 1 1.6.8L23 8.5"/><path d="M5 6h9v12H8"/><path d="M16 18h-2V8h5l3 4v6"/></svg>' },
+  { name: "Security", icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>' },
+];
+
+const PROCESS = [
+  { icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>', title: "Understand", desc: "We start by understanding your project's objectives, consortium dynamics, and specific outcomes." },
+  { icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="1.5"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>', title: "Strategise", desc: "We develop a tailored strategy aligned with EU best practices and your goals." },
+  { icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>', title: "Execute", desc: "Hands-on: creating materials, running campaigns, managing IP, building business cases." },
+  { icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>', title: "Measure", desc: "We track KPIs, gather feedback, and continuously refine for maximum impact." },
+];
+
+const SVC_ICONS = {
+  lightbulb: '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>',
+  trending: '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>',
+  proposal: '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="m9 15 2 2 4-4"/></svg>',
+  positioning: '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
+  strategy: '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
+};
+
+const ARROW = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+
+// ─── NAVIGATION ─────────────────────────────────────────────────────
+function go(id) {
+  document.getElementById('mobile-nav').classList.remove('open');
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+}
+
+// ─── NAV SCROLL ─────────────────────────────────────────────────────
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// ─── FADE-UP OBSERVER ───────────────────────────────────────────────
+const fadeObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); fadeObserver.unobserve(e.target); } });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-up').forEach(el => fadeObserver.observe(el));
+
+// ─── HERO SERVICES ──────────────────────────────────────────────────
+const heroSvc = document.getElementById('hero-services');
+SERVICES.forEach(s => {
+  const d = document.createElement('a');
+  d.href = '#services'; d.className = 'hero-right-svc';
+  d.onclick = e => { e.preventDefault(); go('services'); };
+  d.innerHTML = `${s.title} <span style="color:var(--accent-dark);display:flex">${ARROW}</span>`;
+  heroSvc.appendChild(d);
+});
+
+// ─── SERVICE CARDS ──────────────────────────────────────────────────
+const svcGrid = document.getElementById('svc-grid');
+SERVICES.forEach((s, i) => {
+  const wrap = document.createElement('div');
+  wrap.className = 'fade-up'; wrap.style.transitionDelay = `${i * 0.05}s`; wrap.style.height = '100%';
+  wrap.innerHTML = `
+    <div class="svc-card">
+      <div class="svc-icon">${SVC_ICONS[s.icon]}</div>
+      <h3>${s.title}</h3>
+      <div class="svc-tag-line">${s.tag}</div>
+      <p>${s.desc}</p>
+      <ul class="svc-items" style="display:none">${s.items.map(it => `<li>${it}</li>`).join('')}</ul>
+      <button class="svc-toggle" onclick="toggleSvc(this)">View all offerings <span class="arrow">${ARROW}</span></button>
+    </div>`;
+  svcGrid.appendChild(wrap);
+  fadeObserver.observe(wrap);
+});
+
+function toggleSvc(btn) {
+  const list = btn.previousElementSibling;
+  const open = list.style.display !== 'none';
+  list.style.display = open ? 'none' : 'flex';
+  btn.classList.toggle('open', !open);
+  btn.childNodes[0].textContent = open ? 'View all offerings ' : 'Show less ';
+}
+
+// ─── TABS ───────────────────────────────────────────────────────────
+const tabsBar = document.getElementById('tabs-bar');
+const tabContent = document.getElementById('tab-content');
+let activeTab = 'Start-ups';
+
+Object.keys(CLIENT_INFO).forEach(name => {
+  const btn = document.createElement('button');
+  btn.className = 'tab-btn' + (name === activeTab ? ' active' : '');
+  btn.textContent = name;
+  btn.onclick = () => setTab(name);
+  tabsBar.appendChild(btn);
+});
+
+function setTab(name) {
+  activeTab = name;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.textContent === name));
+  const info = CLIENT_INFO[name];
+  tabContent.innerHTML = `
+    <div class="fade-up visible">
+      <p class="tab-desc">${info.desc}</p>
+      <div class="tab-svc-list">
+        ${info.services.map(s => `<a href="#services" class="tab-svc-item" onclick="event.preventDefault();go('services')">${s} <span style="color:var(--accent-dark);display:flex">${ARROW}</span></a>`).join('')}
+      </div>
+    </div>
+    <div class="fade-up visible" style="transition-delay:0.1s">
+      <div class="tab-cta">
+        <h4>Need guidance?</h4>
+        <p>Our team can advise you on any question — no strings attached. Tell us about your project and we'll find the right approach.</p>
+        <button class="btn-primary" onclick="go('contact')">Contact us ${ARROW}</button>
+      </div>
+    </div>`;
+}
+setTab(activeTab);
+
+// ─── AREAS ──────────────────────────────────────────────────────────
+const areasGrid = document.getElementById('areas-grid');
+AREAS.forEach((a, i) => {
+  const wrap = document.createElement('div');
+  wrap.className = 'fade-up'; wrap.style.transitionDelay = `${i * 0.04}s`; wrap.style.height = '100%';
+  wrap.innerHTML = `<div class="area-card"><div class="area-icon">${a.icon}</div><div class="area-name">${a.name}</div></div>`;
+  areasGrid.appendChild(wrap);
+  fadeObserver.observe(wrap);
+});
+
+// ─── PROCESS ────────────────────────────────────────────────────────
+const processGrid = document.getElementById('process-grid');
+PROCESS.forEach((p, i) => {
+  const wrap = document.createElement('div');
+  wrap.className = 'fade-up'; wrap.style.transitionDelay = `${i * 0.08}s`; wrap.style.height = '100%';
+  wrap.innerHTML = `
+    <div class="process-step">
+      <div class="process-icon">${p.icon}</div>
+      <div class="process-num">Step ${i + 1}</div>
+      <h4>${p.title}</h4>
+      <p>${p.desc}</p>
+    </div>`;
+  processGrid.appendChild(wrap);
+  fadeObserver.observe(wrap);
+});
+
+// ─── TEAM TAGS ──────────────────────────────────────────────────────
+const teamTags = document.getElementById('team-tags');
+["EU Policy","Innovation Management","IPR & Patents","Business Development","Digital Strategy","Impact Assessment","Technology Transfer","Market Analysis","Horizon Europe","Stakeholder Engagement","Go-to-Market","Open Innovation"].forEach(t => {
+  const span = document.createElement('span');
+  span.className = 'team-tag'; span.textContent = t;
+  teamTags.appendChild(span);
+});
+</script>
+</body>
+</html>
